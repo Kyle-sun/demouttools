@@ -82,8 +82,28 @@ public class MyMockitoTest {
 
         //预设当流关闭时抛出异常
         doThrow(new IOException()).when(outputStream).close();
+//        when(outputStream.close()).thenThrow()
 
 //        outputStream.close();
         writer.close();
+    }
+
+    @Test
+    public void test_spy() throws IOException {
+        List list = new LinkedList();
+        List spy = spy(list);
+
+        when(spy.size()).thenReturn(100);
+//        when(spy.get(0)).thenReturn("foo");
+//        doReturn("foo").when(spy).get(0);
+
+        spy.add("one");
+        spy.add("two");
+
+        System.out.println(spy.get(0));
+        System.out.println(spy.size());
+
+        verify(spy).add("one");
+        verify(spy).add("two");
     }
 }
