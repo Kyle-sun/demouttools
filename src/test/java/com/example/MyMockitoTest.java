@@ -1,16 +1,22 @@
 package com.example;
 
 import org.junit.Test;
+import org.mockito.Mock;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 public class MyMockitoTest {
     //模拟接口
@@ -106,4 +112,56 @@ public class MyMockitoTest {
         verify(spy).add("one");
         verify(spy).add("two");
     }
+
+    @Test
+    public void test_spy2() {
+        // spy 允许我们部分 mock 一个类, 也可以使用 @Spy 创建
+        List<String> data = spy(new ArrayList<>());
+
+        // stubbing size 方法
+        doReturn(10).when(data).size();
+
+        // 调用真实的方法
+        data.add("a");
+
+        // 验证
+        assertEquals("a", data.get(0));
+        assertEquals(10, data.size());
+    }
+
+    @Test
+    public void behaviorDrivenDevTest() {
+        // BDD(Behavior Driven Development): Given When Then
+        List<String> data = mock(List.class);
+
+        // Given
+        given(data.size()).willReturn(10);
+
+        // When
+        int actual = data.size();
+
+        // Then
+        assertThat(actual, equalTo(10));
+    }
 }
+
+//
+//    @Mock
+//    private List list5;
+//
+//    public MyMockitoTest() {
+//        initMocks(this);//import static org.mockito.MockitoAnnotations.initMocks;
+//    }
+//
+//    //模拟接口
+//    @Test
+//    public void testMockitoInterface0() {
+//
+//        // 使用模拟对象(而不是真实对象)
+//        list5.add("one");
+//        list5.clear();
+//
+//        // 验证方法是否被调用
+//        verify(list5).add("one");
+//        verify(list5).clear();
+//    }

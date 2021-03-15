@@ -47,6 +47,7 @@ public class CalculateTest {
     public void testArray() {
         Integer[] a = {1, 2, 3, 4, 5};
         Integer[] b = {1, 2, 3, 4, 5};
+//        assertEquals(a,b);
         assertArrayEquals("------", a, b);
         //assertThat(new int[] {1, 2}, equalTo(new int[] {1, 2}));
     }
